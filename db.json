@@ -1,0 +1,17 @@
+{
+  "users": [
+    {
+      "firstName": "Shon",
+      "lastName": "Nguen",
+      "email": "nguenshon@gmail.com",
+      "username": "ShonNguen",
+      "password": "Fishface93",
+      "userGender": "male",
+      "userRole": "freelancer",
+      "dateOfRegistry": "23/3/2022 - 17:5",
+      "id": 1
+    }
+  ],
+  "projects": [],
+  "jobs": []
+}
