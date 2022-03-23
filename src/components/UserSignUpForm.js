@@ -5,6 +5,7 @@ import UserApiClient from '../service/user-api-client';
 import { useForm } from 'react-hook-form';
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
+import { User } from '../model/user-model';
 
 
 //material ui
@@ -14,7 +15,6 @@ import {
 } from '@mui/material';
 //icons
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-import { User } from '../model/user-model';
 
 function Copyright(props) {
     return (
