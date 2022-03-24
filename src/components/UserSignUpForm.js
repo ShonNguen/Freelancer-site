@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
+//components
 import UserApiClient from '../service/user-api-client';
+
 
 //form
 import { useForm } from 'react-hook-form';
@@ -10,7 +14,7 @@ import { User } from '../model/user-model';
 
 //material ui
 import {
-    Typography, Link, Grid, CssBaseline, Box, Avatar, Paper, TextField, FormControl,
+    Typography, Grid, CssBaseline, Box, Avatar, Paper, TextField, FormControl,
     FormLabel, RadioGroup, FormControlLabel, Radio, Button
 } from '@mui/material';
 //icons
@@ -18,11 +22,12 @@ import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 
 function Copyright(props) {
     return (
-        <Typography variant='body2' color='text.secondary' align='center' {...props}>
+        <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
-            <Link color='inherit' href='https://mui.com/'>
-                Your Website
-            </Link>{' '}
+            <Link to='/' style={{ textDecoration: 'none' }}>
+                Freelance ArchViz
+            </Link>
+            {' '}
             {new Date().getFullYear()}
             {'.'}
         </Typography>
@@ -43,7 +48,7 @@ const schema = yup.object({
 
 }).required();
 
-export default function UserSignUpForm() {
+export default function UserSignUpForm({ setHasSignUp }) {
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
@@ -56,7 +61,8 @@ export default function UserSignUpForm() {
         const newUser = new User(
             data.firstName, data.lastName, data.email, data.username, data.password, gender, role, dateOfRegistry
         );
-        UserApiClient.postNewUser(newUser); 
+        UserApiClient.postNewUser(newUser);
+        setHasSignUp(true);
         console.log(newUser);
     }
 
@@ -194,8 +200,16 @@ export default function UserSignUpForm() {
                                     Submit
                                 </Button>
                             </Grid>
+                            <Grid item xs={12}>
+                                <Link to='/' style={{ textDecoration: 'none' }} >
+                                    <Button fullWidth variant="contained" type='submit'>
+                                        Back to Home Page
+                                    </Button>
+                                </Link>
+                            </Grid>
                         </Grid>
                     </Box>
+                    <Copyright sx={{ mt: 5 }} />
                 </Box>
             </Grid>
         </Grid>

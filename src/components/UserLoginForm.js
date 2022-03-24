@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 //material ui
 import {
-    Typography, Link, Grid, CssBaseline, Box, Avatar, Paper, TextField,
+    Typography, Grid, CssBaseline, Box, Avatar, Paper, TextField,
     FormControlLabel, Button
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -12,9 +13,10 @@ function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
+            <Link to='/' style={{ textDecoration: 'none' }}>
+                Freelance ArchViz
+            </Link>
+            {' '}
             {new Date().getFullYear()}
             {'.'}
         </Typography>
@@ -80,9 +82,14 @@ export default function UserLoginForm() {
                         >
                             Sign In
                         </Button>
+                        <Link to='/' style={{ textDecoration: 'none' }} >
+                            <Button fullWidth variant="contained" type='submit'>
+                                Back to Home Page
+                            </Button>
+                        </Link>
                         <Grid container>
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <Link to='/sign-up-form' >
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>
