@@ -1,14 +1,18 @@
 import * as React from 'react';
 
-import { Box, Grid, Link, Container, Typography, TextField } from '@mui/material';
+import { Box, Grid, Container, Typography, Link } from '@mui/material';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 function Copyright() {
     return (
         <React.Fragment>
             {'© '}
             <Link color="inherit" href="https://mui.com/">
-                Your Website
+                Freelance ArchViz
             </Link>{' '}
+            {' '}
             {new Date().getFullYear()}
         </React.Fragment>
     );
@@ -27,17 +31,6 @@ const iconStyle = {
     },
 };
 
-const LANGUAGES = [
-    {
-        code: 'en-US',
-        name: 'English',
-    },
-    {
-        code: 'fr-FR',
-        name: 'Français',
-    },
-];
-
 export default function AppFooter() {
     return (
         <Typography
@@ -55,18 +48,15 @@ export default function AppFooter() {
                             sx={{ height: 120 }}
                         >
                             <Grid item sx={{ display: 'flex' }}>
-                                <Box component="a" href="https://mui.com/" sx={iconStyle}>
-                                    <img
-                                        src="/static/themes/onepirate/appFooterFacebook.png"
-                                        alt="Facebook"
-                                    />
-                                </Box>
-                                <Box component="a" href="https://twitter.com/MUI_hq" sx={iconStyle}>
-                                    <img
-                                        src="/static/themes/onepirate/appFooterTwitter.png"
-                                        alt="Twitter"
-                                    />
-                                </Box>
+                                <Link href='https://www.facebook.com/Behance/'>
+                                    <FacebookIcon sx={{ color: '#fafafa', mr: 1}} />
+                                </Link>
+                                <Link href='https://www.instagram.com/behance/?hl=bg'>
+                                    <InstagramIcon sx={{ color: '#fafafa', mr: 1 }} />
+                                </Link>
+                                <Link href='https://github.com/ShonNguen/Freelancer-site'>
+                                    <GitHubIcon sx={{ color: '#fafafa' }} />
+                                </Link>
                             </Grid>
                             <Grid item>
                                 <Copyright />
@@ -79,10 +69,10 @@ export default function AppFooter() {
                         </Typography>
                         <Box component="ul" sx={{ m: 0, listStyle: 'none', p: 0 }}>
                             <Box component="li" sx={{ py: 0.5 }}>
-                                <Link href="/pages/terms/">Terms</Link>
+                                <Link href="https://mui.com/premium-themes/onepirate/terms/" sx={{ color: '#fafafa' }}>Terms</Link>
                             </Box>
                             <Box component="li" sx={{ py: 0.5 }}>
-                                <Link href="/pages/privacy/">Privacy</Link>
+                                <Link href="https://mui.com/premium-themes/onepirate/privacy/" sx={{ color: '#fafafa' }}>Privacy</Link>
                             </Box>
                         </Box>
                     </Grid>
