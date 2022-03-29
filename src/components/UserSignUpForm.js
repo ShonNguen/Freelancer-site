@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+//redux
+import { signUp } from '../slices/userAuth';
+import { clearMessage } from '../slices/message';
+import { useDispatch, useSelector } from 'react-redux';
 
 //components
 import UserApiClient from '../service/user-api-client';
+import { User } from '../model/user-model';
 
 
 //form
 import { useForm } from 'react-hook-form';
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
-import { User } from '../model/user-model';
 
 
 //material ui
@@ -48,12 +53,21 @@ const schema = yup.object({
 
 }).required();
 
-export default function UserSignUpForm({ setHasSignUp }) {
+
+
+export default function UserSignUpForm(props) {
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
     const [gender, setGender] = useState('');
     const [role, setRole] = useState('');
+
+    const [successful, setSuccessful] = useState(false);
+
+    const { message } = useSelector((state) => state.message);
+    const dispatch = useDispatch();
+
+    let navigate = useNavigate();
 
     function onSignUpFormSubmit(data) {
         const currentDate = new Date();
@@ -61,9 +75,23 @@ export default function UserSignUpForm({ setHasSignUp }) {
         const newUser = new User(
             data.firstName, data.lastName, data.email, data.username, data.password, gender, role, dateOfRegistry
         );
-        UserApiClient.postNewUser(newUser);
-        setHasSignUp(true);
-        console.log(newUser);
+
+        setSuccessful(false);
+
+        dispatch(signUp(newUser))
+            .unwrap()
+            .then(() => {
+                props.history.push('/register/success');
+                window.location.reload();
+                setSuccessful(true);
+            })
+            .catch(() => {
+                setSuccessful(false);
+            })
+    }
+
+    if(successful) {
+        navigate('/register/success', { replace: true });
     }
 
     return (
@@ -111,8 +139,9 @@ export default function UserSignUpForm({ setHasSignUp }) {
                                     label='First Name'
                                     autoFocus
                                     {...register('firstName')}
+                                    error={!!errors?.firstName}
+                                    helperText={errors?.firstName ? errors.firstName.message : null}
                                 />
-                                <span>{errors.firstName?.message}</span>
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -122,9 +151,10 @@ export default function UserSignUpForm({ setHasSignUp }) {
                                     id='lastName'
                                     label='Last Name'
                                     autoFocus
-                                    {...register('lastName', { required: true })}
+                                    {...register('lastName')}
+                                    error={!!errors?.lastName}
+                                    helperText={errors?.lastName ? errors.lastName.message : null}
                                 />
-                                <span>{errors.lastName?.message}</span>
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
@@ -135,10 +165,10 @@ export default function UserSignUpForm({ setHasSignUp }) {
                                     type='email'
                                     fullWidth
                                     autoFocus
-                                    {...register('email', { required: true })}
+                                    {...register('email')}
+                                    error={!!errors?.email}
+                                    helperText={errors?.email ? errors.email.message : null}
                                 />
-                                <span>{errors.email?.message}</span>
-
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -148,9 +178,10 @@ export default function UserSignUpForm({ setHasSignUp }) {
                                     label='Username'
                                     fullWidth
                                     autoFocus
-                                    {...register('username', { required: true, minLength: 8, maxLength: 30 })}
+                                    {...register('username')}
+                                    error={!!errors?.username}
+                                    helperText={errors?.username ? errors.username.message : null}
                                 />
-                                <span>{errors.username?.message}</span>
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -160,9 +191,10 @@ export default function UserSignUpForm({ setHasSignUp }) {
                                     fullWidth
                                     autoFocus
                                     type='password'
-                                    {...register('password', { required: true, minLength: 8, pattern: /^(?=.*\d)/ })}
+                                    {...register('password')}
+                                    error={!!errors?.password}
+                                    helperText={errors?.password ? errors.password.message : null}
                                 />
-                                <span>{errors.password?.message}</span>
 
                             </Grid>
                             <Grid item xs={12} sm={6}>

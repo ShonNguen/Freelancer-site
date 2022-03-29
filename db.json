@@ -76,6 +76,30 @@
       "userRole": "freelancer",
       "dateOfRegistry": "24/3/2022 - 11:34",
       "id": 7
+    },
+    {
+      "newUser": {
+        "firstName": "Jonathan ",
+        "lastName": "Horton",
+        "email": "jonathan.horton@example.com",
+        "username": "jonathan.horton",
+        "password": "galaxy123456",
+        "userGender": "male",
+        "userRole": "employer",
+        "dateOfRegistry": "29/3/2022 - 7:28"
+      },
+      "id": 8
+    },
+    {
+      "firstName": "Jonathan ",
+      "lastName": "Horton",
+      "email": "jonathan.horton@example.com",
+      "username": "jonathan.horton",
+      "password": "galaxy123456",
+      "userGender": "male",
+      "userRole": "employer",
+      "dateOfRegistry": "29/3/2022 - 7:32",
+      "id": 9
     }
   ],
   "projects": [],

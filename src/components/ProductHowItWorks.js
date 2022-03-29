@@ -92,7 +92,7 @@ function ProductHowItWorks() {
                         </Grid>
                     </Grid>
                 </div>
-                <Link to='sign-up-form' style={{ textDecoration: 'none' }} >
+                <Link to='/register' style={{ textDecoration: 'none' }} >
                     <Button
                         color="secondary"
                         size="large"

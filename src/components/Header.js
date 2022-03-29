@@ -35,7 +35,7 @@ export default function Header() {
                                 Sign In
                             </Typography>
                         </Link>
-                        <Link to='sign-up-form' style={{ textDecoration: 'none' }}>
+                        <Link to='/register' style={{ textDecoration: 'none' }}>
                             <Typography
                                 variant="h6"
                                 sx={{ ...rightLink, color: 'secondary.main' }}

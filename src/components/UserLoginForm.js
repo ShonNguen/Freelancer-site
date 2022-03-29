@@ -1,12 +1,24 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+
+//router
+import { Link, useNavigate } from 'react-router-dom';
+
+//components
+import UserApiClient from '../service/user-api-client';
+import { login } from '../slices/userAuth';
+
+//form
+import { useForm } from 'react-hook-form';
+import * as yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup';
 
 //material ui
 import {
     Typography, Grid, CssBaseline, Box, Avatar, Paper, TextField,
-    FormControlLabel, Button
+    Button
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 function Copyright(props) {
@@ -23,15 +35,46 @@ function Copyright(props) {
     );
 }
 
-export default function UserLoginForm() {
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+const schema = yup.object({
+    username: yup.string()
+        .required('Username is required!'),
+    password: yup.string()
+        .required('Password is required!')
+}).required();
+
+
+export default function UserLoginForm(props) {
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: yupResolver(schema)
+    });
+
+    const [loading, setLoading] = useState(false);
+
+    const { isLoggedIn } = useSelector((state) => state.auth);
+    const { message } = useSelector((state) => state.message);
+
+    const dispatch = useDispatch();
+    let navigate = useNavigate(); 
+
+    const onLoginSubmit = (data) => {
+        const username = data.username;
+        const password = data.password;
+        setLoading(true);
+
+        dispatch(login({ username, password }))
+            .unwrap()
+            .then(() => {
+                props.history.push("/profile");
+                window.location.reload();
+            })
+            .catch(() => {
+                setLoading(false);
+            });
     };
+
+    if(isLoggedIn) {
+        navigate('/profile', { replace: true }); 
+    }
 
 
     return (
@@ -53,7 +96,7 @@ export default function UserLoginForm() {
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                    <Box component="form" noValidate onSubmit={handleSubmit(onLoginSubmit)} sx={{ mt: 1 }}>
                         <TextField
                             margin="normal"
                             required
@@ -63,6 +106,9 @@ export default function UserLoginForm() {
                             name="username"
                             autoComplete="username"
                             autoFocus
+                            {...register('username', { required: 'Username is required!' })}
+                            error={!!errors?.username}
+                            helperText={errors?.username ? errors.username.message : null}
                         />
                         <TextField
                             margin="normal"
@@ -73,6 +119,9 @@ export default function UserLoginForm() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            {...register('password', { required: 'Password is required!' })}
+                            error={!!errors?.password}
+                            helperText={errors?.password ? errors.password.message : null}
                         />
                         <Button
                             type="submit"

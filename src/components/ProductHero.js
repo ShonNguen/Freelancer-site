@@ -34,7 +34,7 @@ export default function ProductHero() {
             >
                 Find the perfect freelancer or your next project here.
             </Typography>
-            <Link to='sign-up-form' style={{ textDecoration: 'none' }}>
+            <Link to='/register' style={{ textDecoration: 'none' }}>
                 <Button
                     color="secondary"
                     variant="contained"
