@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 //components
-import UserApiClient from '../service/user-api-client';
 import { login } from '../slices/userAuth';
+import {clearMessage} from '../slices/message';
 
 //form
 import { useForm } from 'react-hook-form';
@@ -54,7 +54,11 @@ export default function UserLoginForm(props) {
     const { message } = useSelector((state) => state.message);
 
     const dispatch = useDispatch();
-    let navigate = useNavigate(); 
+    let navigate = useNavigate();
+
+    useEffect(() => {
+        dispatch(clearMessage());
+    }, [dispatch]);
 
     const onLoginSubmit = (data) => {
         const username = data.username;
@@ -72,8 +76,8 @@ export default function UserLoginForm(props) {
             });
     };
 
-    if(isLoggedIn) {
-        navigate('/profile', { replace: true }); 
+    if (isLoggedIn) {
+        navigate('/profile', { replace: true });
     }
 
 
@@ -146,6 +150,13 @@ export default function UserLoginForm(props) {
                         <Copyright sx={{ mt: 5 }} />
                     </Box>
                 </Box>
+                {message && (
+                    <div className="form-group">
+                        <div className="alert alert-danger" role="alert">
+                            {message}
+                        </div>
+                    </div>
+                )}
             </Grid>
             <Grid
                 item

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 //redux
@@ -7,7 +7,6 @@ import { clearMessage } from '../slices/message';
 import { useDispatch, useSelector } from 'react-redux';
 
 //components
-import UserApiClient from '../service/user-api-client';
 import { User } from '../model/user-model';
 
 
@@ -69,6 +68,10 @@ export default function UserSignUpForm(props) {
 
     let navigate = useNavigate();
 
+    useEffect(() => {
+        dispatch(clearMessage());
+    }, [dispatch]);
+
     function onSignUpFormSubmit(data) {
         const currentDate = new Date();
         const dateOfRegistry = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()} - ${currentDate.getHours()}:${currentDate.getMinutes()}`;
@@ -90,7 +93,7 @@ export default function UserSignUpForm(props) {
             })
     }
 
-    if(successful) {
+    if (successful) {
         navigate('/register/success', { replace: true });
     }
 
@@ -239,6 +242,13 @@ export default function UserSignUpForm(props) {
                                     </Button>
                                 </Link>
                             </Grid>
+
+                            {message && (
+                                <Grid item xs={12}>
+                                    {message}
+                                </Grid>
+                            )}
+
                         </Grid>
                     </Box>
                     <Copyright sx={{ mt: 5 }} />

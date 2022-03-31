@@ -26,7 +26,7 @@ export default function Header() {
                         </Typography>
                     </Link>
                     <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-                        <Link to='log-in-form' style={{ textDecoration: 'none' }}>
+                        <Link to='/login' style={{ textDecoration: 'none' }}>
                             <Typography
                                 color="inherit"
                                 variant="h6"
